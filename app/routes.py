@@ -37,19 +37,19 @@ def logout():
 # Lists all stocks that you want tracked (possibly through a Materialize card?)
 @app.route("/stocks", methods=["GET"]) ##
 def stocks():
-    pass
+    return render_template("stocks.html")
 
-# Displays search bar
-@app.route("/stocks/search", methods=["GET", "POST"]) ##
-def search_stock():
-    pass
+# Displays searched stock
+@app.route("/stocks/search", methods=["GET"]) ##
+def search_results():
+    return render_template("search_results.html")
 
 # Adds stock to tracker
-@app.route("/stocks/add") ##
+@app.route("/stocks/add", methods=["GET"]) ##
 def add_stock():
     pass
 
 # Views a specific stock
-@app.route("stocks/view") ##
+@app.route("stocks/view", methods=["GET"]) ##
 def view_stock():
-    pass
+    return render_template("view_stock.html")
