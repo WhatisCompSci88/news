@@ -1,9 +1,49 @@
 import os
 from app import app
 from flask import flash, render_template, request, redirect, url_for, session
-from app.models import apiUtils
-from app.models import newsUtils
+from app.models import newsUtils, stocksUtils
 from flask_pymongo import PyMongo
+
+app.config['MONGO_DBNAME'] = "final_project_test"
+app.config['MONGO_URI'] = "mongodb+srv://admin:nZ0ELdTyXc6f5utn@cluster0-wb3wx.mongodb.net/final_project_test?retryWrites=true&w=majority"
+mongo = PyMongo(app)
+
+def addUser(username, password):
+    collection = mongo.db.user_database
+    users = list(collection.find({}))
+    userId = len(users) + 1
+    collection.insert({
+        "userId": userId,
+        "username": username,
+        "password": password,
+        "savedArticles": {},
+        "savedStocks": []
+    })
+    return userId
+
+def getUserData(username):
+    collection = mongo.db.user_database
+    users = list(collection.find({"username":username}))
+    if len(users) == 0:
+        return -1
+    else:
+        return users[0]
+
+def getUserId(username):
+    collection = mongo.db.user_database
+    users = list(collection.find({"username":username}))
+    if len(users) == 0:
+        return -1
+    else:
+        return users[0]["userId"]
+
+def authenticateUser(username, password):
+    user = getUserData(username)
+    if user["username"] == username and user["password"] == password:
+        return True
+    else:
+        return False
+
 
 app.secret_key = os.urandom(32)
 # STARTING PAGE
@@ -21,7 +61,7 @@ def home():
     if not "username" in session:
         return redirect(url_for("login"))
     else:
-        return render_template("home.html")
+        return render_template("home.html", logged = True)
 
 @app.route("/news")
 def news():
@@ -29,12 +69,9 @@ def news():
     sitesList = newsUtils.getSiteList(10)
     articlesList = []
     for site in sitesList:
-        siteId = apiUtils.idDict[site]
-        article = apiUtils.getTopResponse(siteId)
+        siteId = newsUtils.idDict[site]
+        article = newsUtils.getTopResponse(siteId, articlesList)
         articlesList.append(article)
-        for key in article:
-            print(key, "/", article[key])
-        print("\n")
     return render_template("news.html", articlesList=articlesList, logged=logged)
 
 
@@ -66,7 +103,20 @@ def register():
 
 @app.route("/register/auth", methods=["POST"]) ##
 def register_auth():
-    pass
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        confirm = request.form["confirm"]
+        if getUserId(username) == -1:
+            if password == confirm:
+                addUser(username, password)
+                flash("ACCOUNT SUCCESSFULLY CREATED")
+            else:
+                flash("PASSWORDS DO NOT MATCH")
+        else:
+            flash("USERNAME TAKEN")
+    return redirect(url_for("register"))
+    
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -74,7 +124,15 @@ def login():
 
 @app.route("/login/auth", methods=["POST"]) ##
 def login_auth():
-    pass
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        if authenticateUser(username, password):
+            session["username"] = username
+            return redirect(url_for("home"))
+        else:
+            flash("INCORRECT USERNAME OR PASSWORD")
+    return redirect(url_for("login"))
 
 @app.route("/logout", methods=["GET"])
 def logout():

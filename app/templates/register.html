@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% block title %} Login {% endblock %}
-{% block header %} LOGIN {% endblock %}
+{% block title %} Register {% endblock %}
+{% block header %} REGISTER {% endblock %}
 
 {% block content %}
     {% with messages = get_flashed_messages() %}
@@ -8,9 +8,10 @@
       {{ msg }} <br>
     {% endfor %}
     {% endwith %}
-    <form method="post" action="/login/auth">
+    <form method="post" action="/register/auth">
       <input type="text" name="username" placeholder="username"><br>
       <input type="password" name="password" placeholder="password"><br>
-      <input class="waves-effect waves-light btn" type="submit" name="login" value="LOGIN">
+      <input type="password" name="confirm" placeholder="confirm password"><br>
+      <input class="waves-effect waves-light btn" type="submit" name="register" value="REGISTER">
     </form>
 {% endblock %}

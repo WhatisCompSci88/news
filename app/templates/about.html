@@ -1,50 +1,31 @@
-<html>
+{% extends "base.html" %}
 
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <style>
-     body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box;}
+{% block customCSS %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link rel="stylesheet" href="/static/style.css">
+{% endblock %}
 
-input[type=text], select, textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  margin-top: 6px;
-  margin-bottom: 16px;
-  resize: vertical;
-}
-
-input[type=submit] {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-input[type=submit]:hover {
-  background-color: #45a049;
-}
-
-.container {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-}
-    </style>
-</head>
-
-<body>
-    <center>
-        <h1>About Page</h1>
-        <hr>
-    </center>
-   <div class="col s12 m7">
+{% block content %}
+  <center>
+    <h1>About Page</h1>
+  </center>
+  <div class="col s12 m7">
+    <h2 class="header">Political</h2>
+    <div class="card horizontal">
+      <div class="card-image">
+        <img src="https://lorempixel.com/100/190/nature/6">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">This is a link</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m7">
     <h2 class="header">Horizontal Card</h2>
     <div class="card horizontal">
       <div class="card-image">
@@ -60,7 +41,7 @@ input[type=submit]:hover {
       </div>
     </div>
   </div>
-          <div class="col s12 m7">
+  <div class="col s12 m7">
     <h2 class="header">Horizontal Card</h2>
     <div class="card horizontal">
       <div class="card-image">
@@ -76,23 +57,7 @@ input[type=submit]:hover {
       </div>
     </div>
   </div>
-            <div class="col s12 m7">
-    <h2 class="header">Horizontal Card</h2>
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="https://lorempixel.com/100/190/nature/6">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-        </div>
-      </div>
-    </div>
-  </div>
-            <div class="col s12 m7">
+  <div class="col s12 m7">
     <h2 class="header">Horizontal Card</h2>
     <div class="card horizontal">
       <div class="card-image">
@@ -109,54 +74,22 @@ input[type=submit]:hover {
     </div>
   </div>
 
-<h3>Contact Form</h3>
+  <h3>Contact Form</h3>
 
-<div class="container">
-  <form action="/action_page.php">
-    <label for="fname">First Name</label>
-    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+  <div class="container" >
+    <form action="/action_page.php">
+      <label for="fname">First Name</label>
+      <input type="text" id="fname" name="firstname" placeholder="Your name..">
 
-    <label for="lname">Last Name</label>
-    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+      <label for="lname">Last Name</label>
+      <input type="text" id="lname" name="lastname" placeholder="Your last name..">
 
-    <label for="country">Country</label>
-    <select id="country" name="country">
-      <option value="australia">Australia</option>
-      <option value="canada">Canada</option>
-      <option value="usa">USA</option>
-    </select>
+      <label for="country">Feedback</label>
+    
+      <label for="subject"></label>
+      <textarea  id="subject" name="subject" placeholder="Give us feedback.."></textarea>
 
-    <label for="subject">Subject</label>
-    <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
-
-    <input type="submit" value="Submit">
-  </form>
-</div>
-    <footer class="red accent-4" "page-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col l6 s12">
-                    <h5 class="white-text">Footer Content</h5>
-                    <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-                </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5 class="white-text">Links</h5>
-                    <ul>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <div class="container">
-                © 2019 Copyright Text
-                <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-            </div>
-        </div>
-    </footer>
-</body>
-
-</html>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+{% endblock %}

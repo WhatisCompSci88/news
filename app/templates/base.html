@@ -2,7 +2,8 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    {% block customCSS %}<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    {% endblock %}
     <title> {% block title %}{% endblock title %} </title>
 </head>
 
@@ -28,9 +29,10 @@
             </ul>
         </div>
     </nav>
+    {% block header %}{% endblock %}
     {% block content %}{% endblock %}
     <footer class="page-footer grey darken-3 grey-text text-lighten-1">
-        <div class="container">
+        <div class="grey darken-3 container">
             <div class="row">
                 <!-- These divs will need classes so that they work as described -->
                 <div class="col l2"><a class=" white-text" href="https://github.com/RichardWong8/news">Github Repo</a></div>
