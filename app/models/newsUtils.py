@@ -1,5 +1,6 @@
 from random import randint as rand
-import apiUtils
+from . import apiUtils
+
 newsSite = ["New Yorker", "Slate", "Daily Show", "The Guardian", "Al Jazeera America", "NPR", "Colbert Report", "New York Times", "BuzzFeed", "PBS", "BBC", "Huffington Post" , "Washington Post", "The Economist", "Politico", "MSNBC", "CNN", "NBC News", "CBS News", "Google News", "Bloomberg", "ABC News", "USA TODAY", "Yahoo News", "Wall Street Journal", "Fox News", "Drudge Report", "Breitbart", "Ruch Limbaugh Show", "The Blaze", "Sean Hannity Show", "Glenn Beck Program"]
 #Assigns Liberal-Conservative Index based on Washington Post Article found here: 
 #https://www.washingtonpost.com/news/the-fix/wp/2014/10/21/lets-rank-the-media-from-liberal-to-conservative-based-on-their-audiences/?noredirect=on&utm_term=.273b3ed0bdb5
@@ -50,12 +51,4 @@ def getSiteList(maxArticles):
             siteList.append(site)
             aggregateIndex+= politicalIndex[site]
     return siteList
-
-
-if __name__ == "__main__":
-    li = getSiteList(12)
-    for site in li:
-        siteId = apiUtils.idDict[site]
-        tile = apiUtils.getTopResponse(siteId)
-        print(tile)
     
