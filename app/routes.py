@@ -65,7 +65,9 @@ def home():
     if not "username" in session:
         return redirect(url_for("login"))
     else:
-        return render_template("home.html", logged = True)
+        userData = getUserData(session["username"])
+        articlesList = userData["savedArticles"]
+        return render_template("home.html", articlesList=articlesList, logged = True)
 
 @app.route("/news", methods=["GET"])
 def news():
@@ -76,7 +78,10 @@ def news():
     #     siteId = newsUtils.idDict[site]
     #     article = newsUtils.getTopResponse(siteId)
     #     articlesList.append(article)
-    articlesList = newsUtils.getArticles(3)
+    #articlesList = newsUtils.getArticles(3)
+    articlesList = newsUtils.cleanImg(newsUtils.getArticles(3))
+    for index in range(0, len(articlesList)):
+        articlesList[index]["index"] = index
     if logged:
         session["articles"] = articlesList
     return render_template("news.html", articlesList=articlesList, logged=logged)
@@ -85,36 +90,48 @@ def news():
 @app.route("/finance", methods=["GET"])
 def finance():
     logged = "username" in session
-    return render_template("finance.html", logged=logged)
-    
+    articlesList = []
+    search = False
+    symbol = ""
+    if "symbol" in request.args:
+        symbol = request.args["symbol"]
+        search = True
+        articlesList = stocksUtils.getStockArticles(symbol, 5)
+        for index in range(0, len(articlesList)):
+            articlesList[index]["index"] = index
+            print(articlesList[index]["index"])
+        if logged:
+            session["articles"] = articlesList
+    return render_template("searchFinance.html", logged=logged, articlesList=articlesList, search=search, symbol=symbol)
+
 @app.route("/about", methods=["GET"])
 def about():
     logged = "username" in session
     return render_template("about.html", logged=logged)
     
 # SEARCH REQUESTS
-@app.route("/news/search", methods=["GET"])
+@app.route("/news/search", methods=["GET","POST"])
 def searchNews():
     logged = "username" in session
     articlesList = []
-    if "query" in session:
-        query = request.args["query"]
+    if "query" in request.form:
+        query = request.form["query"]
         articlesList = newsUtils.getArticlesByQuery(query)
         if logged:
             session["articles"] = articlesList
-    return render_template("searchNews.html", articlesList=articlesList)
+    return render_template("searchNews.html", articlesList=articlesList, logged=logged)
     
-@app.route("/finance/search", methods=["GET"])
-def searchFinance():
-    logged = "username" in session
-    symbol = request.args["symbol"]
-    articlesList = stocksUtils.getStockArticles(symbol, 5)
-    for index in range(0, len(articlesList)):
-        articlesList[index]["index"] = index
-        print(articlesList[index]["index"])
-    if logged:
-        session["articles"] = articlesList
-    return render_template("searchFinance.html", articlesList=articlesList)
+# @app.route("/finance/search", methods=["GET"])
+# def searchFinance():
+#     logged = "username" in session
+#     symbol = request.args["symbol"]
+#     articlesList = stocksUtils.getStockArticles(symbol, 5)
+#     for index in range(0, len(articlesList)):
+#         articlesList[index]["index"] = index
+#         print(articlesList[index]["index"])
+#     if logged:
+#         session["articles"] = articlesList
+#     return render_template("searchFinance.html", articlesList=articlesList)
 
 # AUTHENTICATION
 @app.route("/register", methods=["GET", "POST"])
@@ -131,6 +148,7 @@ def register_auth():
             if password == confirm:
                 addUser(username, password)
                 flash("ACCOUNT SUCCESSFULLY CREATED")
+                return redirect(url_for("login"))
             else:
                 flash("PASSWORDS DO NOT MATCH")
         else:
@@ -159,7 +177,7 @@ def logout():
     if "username" in session:
         session.pop("username")
         session.pop("articles")
-    return redirect(url_for("welcome"))
+    return redirect(url_for("news"))
     
 # SAVE REQUESTS
 # Change to 
@@ -202,13 +220,13 @@ def contact():
     if request.method == "GET":
         return render_template('about.html')
     else:
-        firstname = request.form["firstname"]
-        lastname = request.form["lastname"]
+        name = request.form["name"]
+        email = request.form["email"]
         feedback = request.form["feedback"]
         collection = mongo.db.feedback
         collection.insert({
-            "firstname": firstname, 
-            "lastname": lastname,
+            "name": name, 
+            "email": email,
             "feedback": feedback
         })
         flash("Your response has been recorded!")

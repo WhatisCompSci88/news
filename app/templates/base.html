@@ -4,11 +4,11 @@
 <head>
     <title> {% block title %}{% endblock title %} </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-     <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     {% block customCSS %}{% endblock %}
 </head>
 
-<body>
+<body class="grey lighten-3">
     <nav>
         <div class="red darken-4 nav-wrapper">
             <div class="container">
@@ -23,7 +23,7 @@
                 <ul id="nav-mobile" class="red darken-3 right hide-on-med-and-down">
                     <li><a href="{{url_for('searchNews')}}">Search</a></li>
                     {% if logged %}
-                    <li><a href="{{url_for('news')}}">Logout</a></li>
+                    <li><a href="{{url_for('logout')}}">Logout</a></li>
                     {% else %}
                     <li><a href="{{url_for('login')}}">Login</a></li>
                     {% endif %}

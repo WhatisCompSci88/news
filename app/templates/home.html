@@ -1,11 +1,24 @@
 {% extends "base.html" %}
 {% block title %} Home {% endblock %}
-{% block customCSS %}
-    <link rel="stylesheet" href="/static/footer.css">
-{% endblock %}
 
 {% block content %}
 <div>
-    
+    <div class="row">
+        {% for article in articlesList %}
+        <div class="col  l4">
+            <div class="card">
+                <div class="card-image">
+                    <a href="{{ article.url }}" target="_blank"><img id="images" class="width-50% height-auto" src="{{ article.urlToImage }}" alt="Image not Found"></a>
+                </div>
+                <div class="card-content">
+                    <p>{{ article.title }} by {{ article.author}}</p>
+                </div>
+                <div class="card-action">
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

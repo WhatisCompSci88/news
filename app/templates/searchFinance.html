@@ -1,15 +1,13 @@
 {% extends "base.html" %}
 {% block title %} Finance {% endblock %}
-{% block header %} FINANCE {% endblock %}
+{% block header %} Finance {% if search %} SEARCH - {{symbol.upper()}} {% endif %}{% endblock %}
 
 {% block content %}
 <div>
+    <ul>
     {% for article in articlesList %}
-        <a href="{{ article.url }}">{{ article.headline }} by {{ article.source}}</a><br>
-        <form method="get" action="{{ url_for('saveArticle') }}">
-            <input type="hidden" name="index" value={{article.index}}>
-            <input type="submit" value="Submit"></input>
-        </form><br>
+        <li><a href="{{ article.url }}" target="_blank">{{ article.headline }} by {{ article.source}}</a></li><br>
     {% endfor %}
+    </ul>
 </div>
 {% endblock %}

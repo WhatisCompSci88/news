@@ -1,11 +1,19 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %} Search News {% endblock %} {% block content %}
 <div>
-    <h1>Advanced Search: </h1>
+    <h2>News Search: </h2>
+    <div class="container">
+        <form method="Post" action="/news/search">
+            <input type="text" name="query" placeholder="Enter Keywords Here:">
+            <button style="background-color:Transparent" class="btn waves-effect waves-light" type="submit" name="action">
+                <i class="material-icons" style="color:black">search</i>
+            </button>
+        </form>
+    </div>
     {% for article in articlesList %}
-        <a href="{{ article.url }}"><h2>{{ article.title }}</h2></a><br>
-        <h3>by {{ article.author}}</h3>
+    <a href="{{ article.url }}" target="_blank">
+        <h2>{{ article.title }}</h2>
+    </a><br>
+    <h3>by {{ article.author}}</h3>
     {% endfor %}
 </div>
 {% endblock %}

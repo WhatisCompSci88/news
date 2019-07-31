@@ -1,101 +1,78 @@
-{% extends "base.html" %}
-
-{% block customCSS %}
-  <!-- <link rel="stylesheet" href="/static/about.css"> -->
-
-{% endblock %}
-
-{% block header %}
-  <center>
-    <h1>About Page</h1>
-  </center>
-{% endblock %}
-
-{% block content %}
-  <div class="col s12 m7">
-    <h2 class="header">Who we are</h2>
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="https://cdn-images-1.medium.com/max/1600/1*mX9d3gqqk6X_hCdjrR63cg.jpeg">
+{% extends "base.html" %} {% block customCSS %} {% endblock %} {% block header %}
+<center>
+  {% with messages = get_flashed_messages() %} {% for msg in messages %} <h1>{{ msg }}</h1> <br> {% endfor %} {% endwith %}
+  <h1>About Page</h1>
+</center>
+{% endblock %} {% block content %}
+<div class="col s12 m7">
+  <h2 class="header">Our Goal</h2>
+  <div class="card horizontal">
+    <div class="card-image">
+      <img src="https://www.tecfac.net/wp-content/uploads/2019/03/collab_icon-940x550.jpg">
+    </div>
+    <div class="card-stacked">
+      <div class="card-content">
+        <p>We set out to make a website to expose users to a wide variety of news sources.  Modern news sources often target their userbase's interests, and their news feed becomes an echo chamber.  For the sake of gaining the most complete understanding of news, as well as being exposed to new perspectives we hope this app serves you well! </p>
+        <br>
+        <p>For any concerns, recommendation, or feedback feel free to contact us using the form at the bottom of this page.</p>
       </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-        </div>
+      <div class="card-action red darken-4 ">
+        <br>
       </div>
     </div>
   </div>
-  <div class="col s12 m7">
-    <h2 class="header">Functionalities of website</h2>
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="https://www.tecfac.net/wp-content/uploads/2019/03/collab_icon-940x550.jpg">
+</div>
+<div class="col s12 m7">
+  <h2 class="header">Who we are</h2>
+  <div class="card horizontal">
+    <div class="card-image">
+      <img src="https://cdn-images-1.medium.com/max/1600/1*mX9d3gqqk6X_hCdjrR63cg.jpeg">
+    </div>
+    <div class="card-stacked">
+      <div class="card-content">
+        <p>We are members of the FinTech Focus inaugural cohort at Wells Fargo.</p>
       </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-        </div>
+      <div class="card-action red darken-4 ">
+        <br>
       </div>
     </div>
   </div>
-  <div class="col s12 m7">
-    <h2 class="header">Website's motive</h2>
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="http://www.qsoft.co/blog/file/web-development-scope.jpg">
+</div>
+<div class="col s12 m7">
+  <h2 class="header">API Reference</h2>
+  <div class="card horizontal">
+    <div class="card-image">
+      <img src="https://bbvaopen4u.com/sites/default/files/styles/big-image/public/img/new/bbva-open4u-que-hace-una-api-por-mi-negocio.png?itok=TSMlrZhi">
+    </div>
+    <div class="card-stacked">
+      <div class="card-content">
+        <p>Newsapi provides the articles from the various sources we request.</p>
+        <p>Iex Cloud provides stock news for the stocks we request.</p>
       </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-        </div>
+      <div class="card-action red darken-4 ">
+        <a href="https://newsapi.org/">Newsapi</a>
+        <a href="https://iexcloud.io/">Iex Cloud</a>
       </div>
     </div>
   </div>
-  <div class="col s12 m7">
-    <h2 class="header">API's used</h2>
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="https://bbvaopen4u.com/sites/default/files/styles/big-image/public/img/new/bbva-open4u-que-hace-una-api-por-mi-negocio.png?itok=TSMlrZhi">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-        </div>
-      </div>
-    </div>
-  </div>
-    {% with messages = get_flashed_messages() %}
-    {% for msg in messages %}
-      {{ msg }} <br>
-    {% endfor %}
-    {% endwith %}
-  <center><h1>Contact Us</h1></center>
-  
-  <div class="container" >
-    <form method="post" action="/contact">
-      <label for="fname">First Name</label>
-      <input type="text" id="fname" name="firstname" placeholder="Your name..">
+</div>
+<center>
+  <h1>Contact Us</h1>
+</center>
 
-      <label for="lname">Last Name</label>
-      <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+<div class="container">
+  <form method="post" action="/contact">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" placeholder="Your name..">
 
-      <label for="feedback">Feedback</label>
-      <textarea  id="subject" name="feedback" placeholder="Give us feedback.."></textarea><br><br>
-      
-      <input class="waves-effect waves-light btn" type="submit" value="Submit">
-      <br><br>
-    </form>
-  </div>
+    <label for="email">Email</label>
+    <input type="text" id="email" name="email" placeholder="Your email..">
+
+    <label for="feedback">Feedback</label>
+    <textarea id="subject" name="feedback" placeholder="Give us feedback.."></textarea><br><br>
+
+    <input class="waves-effect waves-light btn" type="submit" value="Submit">
+    <br><br>
+  </form>
+</div>
 {% endblock %}

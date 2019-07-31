@@ -11,6 +11,13 @@ idDict = {
     "New Yorker" : "", "Slate" : "", "Daily Show" : "", "The Guardian": "", "Al Jazeera America": "al-jazeera-english", "NPR" : "", "Colbert Report" : "", "New York Times" : "the-new-york-times", "BuzzFeed" : "buzzfeed", "PBS" : "", "BBC" : "bbc-news", "Huffington Post" : "the-huffington-post" , "Washington Post" : "the-washington-post", "The Economist": "the-economist", "Politico" : "politico", "MSNBC" : "msnbc", "CNN" : "cnn" , "NBC News": "nbc-news", "CBS News": "cbs-news", "Google News" : "google-news", "Bloomberg" : "bloomberg", "ABC News" :  "abc-news", "USA TODAY" : "usa-today", "Yahoo News": "", "Wall Street Journal" : "the-wall-street-journal", "Fox News" : "fox-news", "Drudge Report" : "", "Breitbart" : "breitbart-news", "Ruch Limbaugh Show" : "", "The Blaze" : "", "Sean Hannity Show" : "", "Glenn Beck Program" : ""
 }
 
+tempNews = [{
+    "title": "",
+    "author": "",
+    "url": "",
+    "urlToImage": None,
+} for i in range(0,9)]
+
 #Returns single pseudo-random site
 def getRandomSite():
     x = rand(0, len(newsSite)-1)
@@ -69,14 +76,14 @@ def getTopResponse(siteId):
     #print("\n SITE ID: " + siteId + " \n")
     data = get_json_response(
         "https://newsapi.org/v2/top-headlines", 
-        #'12126d1b282e4c94a45c9a108b94f246',
-        "be18c103021f45059454abfe91436f61",
+        '12126d1b282e4c94a45c9a108b94f246',
+        #"be18c103021f45059454abfe91436f61",
         {
             "sources" : siteId,
             "language": "en"
         },
     )
-    #print(data)
+    print(data)
     if data["totalResults"] > 0:
         randNum = rand(0,len(data["articles"]) - 1)
         return data["articles"][randNum]
@@ -86,8 +93,8 @@ def getTopResponse(siteId):
 def getArticlesByQuery(query):
     data = get_json_response(
         "https://newsapi.org/v2/everything", 
-        #'12126d1b282e4c94a45c9a108b94f246',
-        "be18c103021f45059454abfe91436f61",
+        '12126d1b282e4c94a45c9a108b94f246',
+        #"be18c103021f45059454abfe91436f61",
         {
             "q": query,
             "language": "en"

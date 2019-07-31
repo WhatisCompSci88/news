@@ -1,12 +1,18 @@
-{% extends "base.html" %} {% block title %} News {% endblock %} {% block header %} NEWS {% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %} News {% endblock %} {% block header %} News {% endblock %} {% block content %}
 <div>
     <div class="row">
         {% for article in articlesList %}
         <div class="col  l4">
             <div class="card">
                 <div class="card-image">
-                    <a href="{{ article.url }}"><img id="images" class="width-50% height-auto" src="{{ article.urlToImage }}" alt="Image not Found"></a>
+                    <a href="{{ article.url }}" target="_blank">
+                        <img id="images" class="width-50% height-auto" src="{{ article.urlToImage }}" alt="Image not found">
+                    </a>
                 </div>
+                <form method="get" action="{{ url_for('saveArticle') }}" class="btn-floating halfway-fab waves-effect waves-light red">
+                    <input type="hidden" name="index" value={{article.index}}>
+                    <input style="color:white;"  type="submit" value="SAVE"></input>
+                </form>
                 <div class="card-content">
                     <p>{{ article.title }} by {{ article.author}}</p>
                 </div>
@@ -17,6 +23,5 @@
         </div>
         {% endfor %}
     </div>
-    <script src="../static/news.js"></script>
 </div>
 {% endblock %}
