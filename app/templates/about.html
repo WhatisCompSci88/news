@@ -1,95 +1,101 @@
 {% extends "base.html" %}
 
 {% block customCSS %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<link rel="stylesheet" href="/static/style.css">
+  <!-- <link rel="stylesheet" href="/static/about.css"> -->
+
 {% endblock %}
 
-{% block content %}
+{% block header %}
   <center>
     <h1>About Page</h1>
   </center>
-  <div class="col s12 m7">
-    <h2 class="header">Political</h2>
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="https://lorempixel.com/100/190/nature/6">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col s12 m7">
-    <h2 class="header">Horizontal Card</h2>
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="https://lorempixel.com/100/190/nature/6">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col s12 m7">
-    <h2 class="header">Horizontal Card</h2>
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="https://lorempixel.com/100/190/nature/6">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col s12 m7">
-    <h2 class="header">Horizontal Card</h2>
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="https://lorempixel.com/100/190/nature/6">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-        </div>
-      </div>
-    </div>
-  </div>
+{% endblock %}
 
-  <h3>Contact Form</h3>
-
+{% block content %}
+  <div class="col s12 m7">
+    <h2 class="header">Who we are</h2>
+    <div class="card horizontal">
+      <div class="card-image">
+        <img src="https://cdn-images-1.medium.com/max/1600/1*mX9d3gqqk6X_hCdjrR63cg.jpeg">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">This is a link</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m7">
+    <h2 class="header">Functionalities of website</h2>
+    <div class="card horizontal">
+      <div class="card-image">
+        <img src="https://www.tecfac.net/wp-content/uploads/2019/03/collab_icon-940x550.jpg">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">This is a link</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m7">
+    <h2 class="header">Website's motive</h2>
+    <div class="card horizontal">
+      <div class="card-image">
+        <img src="http://www.qsoft.co/blog/file/web-development-scope.jpg">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">This is a link</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m7">
+    <h2 class="header">API's used</h2>
+    <div class="card horizontal">
+      <div class="card-image">
+        <img src="https://bbvaopen4u.com/sites/default/files/styles/big-image/public/img/new/bbva-open4u-que-hace-una-api-por-mi-negocio.png?itok=TSMlrZhi">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">This is a link</a>
+        </div>
+      </div>
+    </div>
+  </div>
+    {% with messages = get_flashed_messages() %}
+    {% for msg in messages %}
+      {{ msg }} <br>
+    {% endfor %}
+    {% endwith %}
+  <center><h1>Contact Us</h1></center>
+  
   <div class="container" >
-    <form action="/action_page.php">
+    <form method="post" action="/contact">
       <label for="fname">First Name</label>
       <input type="text" id="fname" name="firstname" placeholder="Your name..">
 
       <label for="lname">Last Name</label>
       <input type="text" id="lname" name="lastname" placeholder="Your last name..">
 
-      <label for="country">Feedback</label>
-    
-      <label for="subject"></label>
-      <textarea  id="subject" name="subject" placeholder="Give us feedback.."></textarea>
-
-      <input type="submit" value="Submit">
+      <label for="feedback">Feedback</label>
+      <textarea  id="subject" name="feedback" placeholder="Give us feedback.."></textarea><br><br>
+      
+      <input class="waves-effect waves-light btn" type="submit" value="Submit">
+      <br><br>
     </form>
   </div>
 {% endblock %}

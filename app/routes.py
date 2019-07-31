@@ -16,7 +16,7 @@ def addUser(username, password):
         "userId": userId,
         "username": username,
         "password": password,
-        "savedArticles": {},
+        "savedArticles": [],
         "savedStocks": []
     })
     return userId
@@ -43,7 +43,11 @@ def authenticateUser(username, password):
         return True
     else:
         return False
-
+        
+def editUserData(username, params):
+    collection = mongo.db.user_database
+    collection.update_one({"username": username}, { "$set": params })
+    
 
 app.secret_key = os.urandom(32)
 # STARTING PAGE
@@ -56,45 +60,61 @@ def start():
         return redirect(url_for("home"))
 
 # NAVBAR OPTIONS
-@app.route("/home")
+@app.route("/home", methods=["GET"])
 def home():
     if not "username" in session:
         return redirect(url_for("login"))
     else:
         return render_template("home.html", logged = True)
 
-@app.route("/news")
+@app.route("/news", methods=["GET"])
 def news():
     logged = "username" in session
-    sitesList = newsUtils.getSiteList(10)
-    articlesList = []
-    for site in sitesList:
-        siteId = newsUtils.idDict[site]
-        article = newsUtils.getTopResponse(siteId, articlesList)
-        articlesList.append(article)
+    # sitesList = newsUtils.getSiteList(10)
+    # articlesList = []
+    # for site in sitesList:
+    #     siteId = newsUtils.idDict[site]
+    #     article = newsUtils.getTopResponse(siteId)
+    #     articlesList.append(article)
+    articlesList = newsUtils.getArticles(3)
+    if logged:
+        session["articles"] = articlesList
     return render_template("news.html", articlesList=articlesList, logged=logged)
 
 
-@app.route("/finance")
+@app.route("/finance", methods=["GET"])
 def finance():
     logged = "username" in session
     return render_template("finance.html", logged=logged)
     
-@app.route("/about")
+@app.route("/about", methods=["GET"])
 def about():
     logged = "username" in session
     return render_template("about.html", logged=logged)
     
 # SEARCH REQUESTS
-@app.route("/search/news")
+@app.route("/news/search", methods=["GET"])
 def searchNews():
     logged = "username" in session
-    return render_template("search.html", category="news")
+    articlesList = []
+    if "query" in session:
+        query = request.args["query"]
+        articlesList = newsUtils.getArticlesByQuery(query)
+        if logged:
+            session["articles"] = articlesList
+    return render_template("searchNews.html", articlesList=articlesList)
     
-@app.route("/search/finance")
+@app.route("/finance/search", methods=["GET"])
 def searchFinance():
     logged = "username" in session
-    return render_template("search.html", category="finance")
+    symbol = request.args["symbol"]
+    articlesList = stocksUtils.getStockArticles(symbol, 5)
+    for index in range(0, len(articlesList)):
+        articlesList[index]["index"] = index
+        print(articlesList[index]["index"])
+    if logged:
+        session["articles"] = articlesList
+    return render_template("searchFinance.html", articlesList=articlesList)
 
 # AUTHENTICATION
 @app.route("/register", methods=["GET", "POST"])
@@ -138,13 +158,58 @@ def login_auth():
 def logout():
     if "username" in session:
         session.pop("username")
+        session.pop("articles")
     return redirect(url_for("welcome"))
     
 # SAVE REQUESTS
-@app.route("/save/article", methods=["POST"])
+# Change to 
+# finance/save/article
+# news/save/article
+@app.route("/save/article", methods=["GET", "POST"])
 def saveArticle():
-    pass
+    if "username" in session and "articles" in session:
+        username = session["username"]
+        index = int(request.args["index"])
+        
+        articleToSave = session["articles"][index]
+        userData = getUserData(username)
+        savedArticles = userData["savedArticles"]
+        savedArticles.append(articleToSave)
+        
+        editUserData(username, {
+            "savedArticles": savedArticles
+        })
+    return redirect(url_for("home"))
     
-@app.route("/save/stock", methods=["POST"])
+@app.route("/save/stock", methods=["GET", "POST"])
 def saveStock():
-    pass
+    if "username" in session:
+        username = session["username"]
+        stock = request.args["symbol"]
+        
+        userData = getUserData(username)
+        savedStocks = userData["savedStocks"]
+        savedStocks.append(stock)
+        
+        editUserData(username, {
+            "savedStocks": savedStocks
+        })
+    return ""
+
+@app.route("/contact", methods=["GET","POST"])
+def contact():
+    
+    if request.method == "GET":
+        return render_template('about.html')
+    else:
+        firstname = request.form["firstname"]
+        lastname = request.form["lastname"]
+        feedback = request.form["feedback"]
+        collection = mongo.db.feedback
+        collection.insert({
+            "firstname": firstname, 
+            "lastname": lastname,
+            "feedback": feedback
+        })
+        flash("Your response has been recorded!")
+        return redirect(url_for("about"))

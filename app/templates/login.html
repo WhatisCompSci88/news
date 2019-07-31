@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 {% block title %} Login {% endblock %}
-{% block header %} LOGIN {% endblock %}
+{% block customCSS %}
+    <link rel="stylesheet" href="/static/footer.css">
+{% endblock %}
 
+{% block header %} <div class="center">LOGIN</div> {% endblock %}
 {% block content %}
+  <div class="container center">
     {% with messages = get_flashed_messages() %}
     {% for msg in messages %}
       {{ msg }} <br>
@@ -13,4 +17,10 @@
       <input type="password" name="password" placeholder="password"><br>
       <input class="waves-effect waves-light btn" type="submit" name="login" value="LOGIN">
     </form>
+    <div>
+      <class>
+        
+      </class>
+    </div>
+  </div>
 {% endblock %}

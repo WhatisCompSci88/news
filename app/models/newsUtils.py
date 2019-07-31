@@ -65,14 +65,119 @@ def get_json_response(url, apiKey, params):
     return response
     
 #  sources, q, language, country, category
-def getTopResponse(siteId, articlesList):
+def getTopResponse(siteId):
+    #print("\n SITE ID: " + siteId + " \n")
     data = get_json_response(
-        'https://newsapi.org/v2/everything', 
-        '12126d1b282e4c94a45c9a108b94f246',
+        "https://newsapi.org/v2/top-headlines", 
+        #'12126d1b282e4c94a45c9a108b94f246',
+        "be18c103021f45059454abfe91436f61",
         {
-            'sources' : siteId
+            "sources" : siteId,
+            "language": "en"
         },
     )
-    randNum = rand(0,len(data["articles"]))
-    return data["articles"][randNum]
+    #print(data)
+    if data["totalResults"] > 0:
+        randNum = rand(0,len(data["articles"]) - 1)
+        return data["articles"][randNum]
+    else:
+        return False
+ 
+def getArticlesByQuery(query):
+    data = get_json_response(
+        "https://newsapi.org/v2/everything", 
+        #'12126d1b282e4c94a45c9a108b94f246',
+        "be18c103021f45059454abfe91436f61",
+        {
+            "q": query,
+            "language": "en"
+        },
+    )
+    return data
+
+def getTopHeadlines():
+    data = get_json_response(
+        "https://newsapi.org/v2/top-headlines", 
+        #'12126d1b282e4c94a45c9a108b94f246',
+        "be18c103021f45059454abfe91436f61",
+        {
+            "language": "en"
+        },
+    )
+    return data["articles"]
+ 
+# https://www.allsides.com/media-bias/media-bias-ratings
+# Media Bias Ratings are determined using multiple methods and represent 
+# the average judgment of Americans. They are based on blind surveys of 
+# people across the political spectrum, multi-partisan analysis, editorial 
+# reviews, third party data, and tens of thousands of user feedback ratings.
+
+left = [
+    "the-huffington-post",
+    "msnbc",
+    "newsweek",
+    "new-york-magazine",
+    "vice-news",
     
+    "abc-news",
+    "al-jazeera-english",
+    "buzzfeed",
+    "cbs-news",
+    "cnn",
+    "nbc-news",
+    "politico",
+    "the-economist",
+    "the-new-york-times",
+    "the-verge",
+    "the-washington-post",
+    "time",
+]
+center = [
+    "associated-press",
+    "bbc-news",
+    "bloomberg",
+    "reuters",
+    "the-hill",
+    "the-wall-street-journal",
+    "usa-today",
+]
+right = [
+    "the-washington-times",
+    "the-american-conservative",
+    
+    "fox-news",
+    "national-review",
+]
+
+def getRandomArticle(siteIdList, titlesDict):
+    article = False
+    counter = 0
+    while not article and counter < 5:
+        siteId = siteIdList[rand(0, len(siteIdList)-1)]
+        article = getTopResponse(siteId)
+        if article:
+            if article["title"] in titlesDict:
+                article = False
+            else:
+                titlesDict[article["title"]] = True
+        counter += 1
+    return article
+
+def cleanImg(articlesList):
+    for element in articlesList:
+        if(element['urlToImage'] == None):
+            element['urlToImage'] = "../static/gavel.jpg"
+    return articlesList
+    
+def getArticles(numArticles):
+    articlesList = []
+    titlesDict = {}
+    for i in range(0, numArticles):
+        article = getRandomArticle(left, titlesDict)        
+        articlesList.append(article)
+        article = getRandomArticle(center, titlesDict)        
+        articlesList.append(article)
+        article = getRandomArticle(right, titlesDict)        
+        articlesList.append(article)
+    articlesList = cleanImg(articlesList)
+    return articlesList

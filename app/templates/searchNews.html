@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <h1>Advanced Search: </h1>
+    {% for article in articlesList %}
+        <a href="{{ article.url }}"><h2>{{ article.title }}</h2></a><br>
+        <h3>by {{ article.author}}</h3>
+    {% endfor %}
+</div>
+{% endblock %}

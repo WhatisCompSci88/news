@@ -2,35 +2,39 @@
 <html>
 
 <head>
-    {% block customCSS %}<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    {% endblock %}
     <title> {% block title %}{% endblock title %} </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+     <link rel="stylesheet" href="/static/styles.css">
+    {% block customCSS %}{% endblock %}
 </head>
 
 <body>
     <nav>
-        <div class="nav-wrapper">
-            <ul id="nav-mobile" class="left hide-on-med-and-down">
-                <li><a href="{{url_for('news')}}"><img class ="circle" src="../static/gavel.jpg"></a></li>
-                {% if logged %}
-                <li><a href="{{url_for('home')}}">Home</a></li>
-                {% endif %}
-                <li><a href="{{url_for('news')}}">News</a></li>
-                <li><a href="{{url_for('finance')}}">Finance</a></li>
-                <li><a href="{{url_for('about')}}">About</a></li>
-            </ul>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="{{url_for('searchNews')}}">Search</a></li>
-                {% if logged %}
-                <li><a href="{{url_for('news')}}">Logout</a></li>
-                {% else %}
-                <li><a href="{{url_for('login')}}">Login</a></li>
-                {% endif %}
-            </ul>
+        <div class="red darken-4 nav-wrapper">
+            <div class="container">
+                <ul id="nav-mobile" class="red darken-3 left hide-on-med-and-down">
+                    {% if logged %}
+                    <li><a href="{{url_for('home')}}">Home</a></li>
+                    {% endif %}
+                    <li><a href="{{url_for('news')}}">News</a></li>
+                    <li><a href="{{url_for('finance')}}">Finance</a></li>
+                    <li><a href="{{url_for('about')}}">About</a></li>
+                </ul>
+                <ul id="nav-mobile" class="red darken-3 right hide-on-med-and-down">
+                    <li><a href="{{url_for('searchNews')}}">Search</a></li>
+                    {% if logged %}
+                    <li><a href="{{url_for('news')}}">Logout</a></li>
+                    {% else %}
+                    <li><a href="{{url_for('login')}}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </nav>
-    {% block header %}{% endblock %}
-    {% block content %}{% endblock %}
+    <div class="container">
+        <h1>{% block header %}{% endblock %}</h1>
+        {% block content %}{% endblock %}
+    </div>
     <footer class="page-footer grey darken-3 grey-text text-lighten-1">
         <div class="grey darken-3 container">
             <div class="row">
