@@ -87,14 +87,16 @@ def news():
     return render_template("news.html", articlesList=articlesList, logged=logged)
 
 
-@app.route("/finance", methods=["GET"])
+@app.route("/finance", methods=["GET","POST"])
 def finance():
     logged = "username" in session
     articlesList = []
     search = False
     symbol = ""
-    if "symbol" in request.args:
-        symbol = request.args["symbol"]
+    if "symbol" in request.form:
+        symbol = request.form["symbol"]
+        if symbol == "":
+            symbol = "aapl"
         search = True
         articlesList = stocksUtils.getStockArticles(symbol, 5)
         for index in range(0, len(articlesList)):
@@ -116,7 +118,14 @@ def searchNews():
     articlesList = []
     if "query" in request.form:
         query = request.form["query"]
+        if query == "":
+            query = "North Korea"
         articlesList = newsUtils.getArticlesByQuery(query)
+        for article in articlesList:
+            if article["author"] == None or "https:" in article["author"]:
+                article["author"] = article["source"]["name"]
+            elif not(article["source"]["name"] in article["author"]):
+                article["author"] = article["author"] + ", " + article["source"]["name"]
         if logged:
             session["articles"] = articlesList
     return render_template("searchNews.html", articlesList=articlesList, logged=logged)
@@ -176,6 +185,7 @@ def login_auth():
 def logout():
     if "username" in session:
         session.pop("username")
+    if "articles" in session:
         session.pop("articles")
     return redirect(url_for("news"))
     

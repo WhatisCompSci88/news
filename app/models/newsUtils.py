@@ -100,7 +100,7 @@ def getArticlesByQuery(query):
             "language": "en"
         },
     )
-    return data
+    return data["articles"]
 
 def getTopHeadlines():
     data = get_json_response(

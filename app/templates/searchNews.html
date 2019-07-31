@@ -1,4 +1,8 @@
-{% extends "base.html" %} {% block title %} Search News {% endblock %} {% block content %}
+{% extends "base.html" %}
+{% block title %} Search News {% endblock %} 
+{% block customCSS %} <link rel="stylesheet" href="/static/style.css"> {% endblock %} 
+
+{% block content %}
 <div>
     <h2>News Search: </h2>
     <div class="container">
@@ -9,11 +13,13 @@
             </button>
         </form>
     </div>
+    <div class="style">
     {% for article in articlesList %}
     <a href="{{ article.url }}" target="_blank">
         <h2>{{ article.title }}</h2>
     </a><br>
     <h3>by {{ article.author}}</h3>
     {% endfor %}
+    </div>
 </div>
 {% endblock %}
