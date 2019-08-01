@@ -53,8 +53,8 @@
         <p>Iex Cloud provides stock news for the stocks we request.</p>
       </div>
       <div class="card-action red darken-4 ">
-        <a href="https://newsapi.org/">Newsapi</a>
-        <a href="https://iexcloud.io/">Iex Cloud</a>
+        <a style="color:yellow" href="https://newsapi.org/">Newsapi</a>
+        <a style="color:yellow" href="https://iexcloud.io/">Iex Cloud</a>
       </div>
     </div>
   </div>
@@ -69,12 +69,14 @@
     <input type="text" id="name" name="name" placeholder="Your name.." minlength=2>
 
     <label for="email">Email</label>
-    <input type="email" id="email" name="email" placeholder="Your email..">
+    <input type="email" id="email" name="email" placeholder="Your email.." minlength=1>
 
     <label for="feedback">Feedback</label>
     <textarea id="subject" name="feedback" placeholder="Give us feedback.." minlength=1></textarea><br><br>
 
-    <input class="waves-effect waves-light btn" type="submit" value="Submit">
+    <div class="red darken-4 waves-effect waves-light btn">
+      <input style="color:#EBDA23;" type="submit" value="Submit">
+    </div>
     <br><br>
   </form>
 </div>

@@ -2,14 +2,12 @@
 <div class="row">
     <div class="col s12">
         <ul class="tabs">
-            <li class="tab col s6"><a class="active" href="#test1">Saved News</a></li>
-            <li class="tab col s6"><a href="#test2">Saved Stocks</a></li>
+            <li class="tab col s6"><a class="active" href="#news">Saved News</a></li>
+            <li class="tab col s6"><a href="#stocks">Saved Stocks</a></li>
         </ul>
     </div>
-    
 </div>
-<div id="test1" class="col s12"><h2>Saved News</h2>
-    <div>
+<div id="news" class="col s12"><h2>Saved News</h2>
     {% for row in range(((articlesList|count / 3) + 0.99)| int) %}
     <div class="row">
         {% for col in range(3) %}
@@ -36,5 +34,22 @@
     </div>
     {% endfor %}
 </div>
-<div id="test2" class="col s12"><h2>Saved Stocks</h2></div>
+<div id="stocks" class="col s12">
+    <h2>Saved Stocks</h2>
+    <form method="get" action="/save/stock">
+        <input style="height: 35px;"type="textarea" name="symbol" value="" placeholder="SYMBOL">
+        <div class="waves-effect waves-light btn red darken-4">
+            <input style="color:#EBDA23;" type="submit" name="add" value="ADD STOCK">
+        </div>
+    </form><br>
+    <hr><br>
+    {% for stock in stocksList %}
+    <div class="waves-effect waves-light btn white red darken-4">
+        <form method="post" action="/finance">
+            <input type="hidden" name="symbol" value="{{stock}}">
+            <input style="padding-bottom:25px; color:#EBDA23;" type="submit" value="{{stock|upper}}">
+        </form>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

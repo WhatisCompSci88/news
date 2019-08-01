@@ -12,5 +12,7 @@ main {
     font-family: 'Open Sans', sans-serif !important;
 }
 
-.tester {
+#center-logo{
+  margin-right: 30px !important;
+  
 }

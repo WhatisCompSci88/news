@@ -1,8 +1,4 @@
-{% extends "base.html" %} 
-{% block title %} Finance {% endblock %} 
-
-{% block header %} Finance {% if search %} SEARCH - {{symbol.upper()}} {% endif %}{% endblock %} 
-{% block content %}
+{% extends "base.html" %} {% block title %} Finance {% endblock %} {% block header %} Finance {% if search %} SEARCH - {{symbol.upper()}} {% endif %}{% endblock %} {% block content %}
 <h3>Symbol Search: </h3>
 <div class="container">
     <form method="post" action="/finance">
@@ -21,10 +17,16 @@
     </div>
     {% endif %}
 </div>
-<div>
-    <ul>
-        {% for article in articlesList %}
-        <li><a href="{{ article.url }}" target="_blank">{{ article.headline }} by {{ article.source}}</a></li><br> {% endfor %}
-    </ul>
+{% for article in articlesList %}
+<div class="collection">
+    <a class="collection-item" style="color:black;" href="{{ article.url }}" target="_blank">
+        <h3>{{article.headline}}</h3>
+        <h5>by {{ article.source }}</h5>
+    </a>
+    <div class="red darken-4">
+        <br>
+        <hr>
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}

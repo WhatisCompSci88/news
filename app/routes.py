@@ -27,11 +27,11 @@ def getUserId(username):
 
 def authenticateUser(username, password):
     user = getUserData(username)
-    if user["username"] == username and user["password"] == password:
-        return True
-    else:
-        return False
-        
+    if not user == -1:
+        if user["username"] == username and user["password"] == password:
+            return True
+    return False
+    
 def addUser(username, password):
     collection = mongo.db.user_database
     users = list(collection.find({}))
@@ -90,7 +90,9 @@ def home():
     else:
         userData = getUserData(session["username"])
         articlesList = userData["savedArticles"]
-        return render_template("home.html", articlesList=articlesList, logged = True)
+        stocksList = userData["savedStocks"]
+        #stocksList = ["aapl", "amd"]
+        return render_template("home.html", logged = True, articlesList=articlesList, stocksList=stocksList)
 
 @app.route("/news", methods=["GET"])
 def news():
@@ -129,7 +131,7 @@ def finance():
         if symbol == "":
             symbol = "aapl"
         search = True
-        articlesList = stocksUtils.getStockArticles(symbol, 5)
+        articlesList = stocksUtils.getStockArticles(symbol, 10)
         for index in range(0, len(articlesList)):
             articlesList[index]["index"] = index
             print(articlesList[index]["index"])
@@ -153,6 +155,8 @@ def searchNews():
         if query == "":
             query = "North Korea"
         articlesList = newsUtils.getArticlesByQuery(query)
+        for index in range(0, len(articlesList)):
+            articlesList[index]["index"] = index
         for article in articlesList:
             if article["author"] == None or "https:" in article["author"]:
                 article["author"] = article["source"]["name"]
@@ -250,15 +254,17 @@ def saveStock():
     if "username" in session:
         username = session["username"]
         stock = request.args["symbol"]
-        
+        if stock == "":
+            stock = "aapl"
         userData = getUserData(username)
         savedStocks = userData["savedStocks"]
-        savedStocks.append(stock)
-        
-        editUserData(username, {
-            "savedStocks": savedStocks
-        })
-    return ""
+        if stock not in savedStocks:
+            savedStocks.append(stock)
+            
+            editUserData(username, {
+                "savedStocks": savedStocks
+            })
+    return redirect("/home#stocks")
 
 @app.route("/contact", methods=["GET","POST"])
 def contact():

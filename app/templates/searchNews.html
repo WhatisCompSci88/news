@@ -10,11 +10,19 @@
         </form>
     </div>
     {% for article in articlesList %}
-    <div class="tester">
-        <h3>{{article.title}}</h3>
-        <h5>by {{ article.author}}</h5>
-        <a href="{{ article.url }}" target="_blank">
-            {{ article.url }}
+    <div class="collection">
+        <a class="collection-item" style="color:black;" href="{{ article.url }}" target="_blank">
+            <h3>{{article.title}}</h3>
+            <h5>by {{ article.author}}</h5>
         </a>
+        <br>
+        <div>
+            <form method="get" action="{{ url_for('saveArticle') }}" class="red darken-4 waves-effect waves-light btn">
+                <input type="hidden" name="index" value={{article.index}}>
+                <input style="color:#EBDA23;" type="submit" value="Save"></input>
+            </form>
+        </div>
     </div>
-    {% endfor %} {% endblock %}
+    <hr> 
+    {% endfor %} 
+{% endblock %}

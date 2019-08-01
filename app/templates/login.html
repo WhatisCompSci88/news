@@ -10,10 +10,10 @@
     {% endfor %}
     {% endwith %}
     <form method="post" action="/login/auth">
-      <input type="text" name="username" placeholder="username"><br>
-      <input type="password" name="password" placeholder="password"><br>
-      <button class="waves-effect waves-light btn" type="submit" name="login">Login</button>
+      <input type="text" name="username" placeholder="username" value="" minlength=1><br>
+      <input type="password" name="password" placeholder="password" value="" minlength=1><br>
+      <button style="color:#EBDA23" class="waves-effect waves-light red darken-4 btn" type="submit" name="login">Login</button>
     </form><br>
-    <a class="waves-effect waves-light btn" href="{{ url_for('register') }}"> Don't have an account? Register </a>
+    <a style="color:#EBDA23" class="waves-effect waves-light red darken-4 btn" href="{{ url_for('register') }}"> Don't have an account? Register </a>
   </div>
 {% endblock %}
