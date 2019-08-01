@@ -4,13 +4,13 @@
 {% block header %} News {% endblock %} 
 {% block content %}
 <div>
-    {% for i in range(((articlesList|count / 3) + 0.99)| int) %}
+    {% for row in range(((articlesList|count / 3) + 0.99)| int) %}
     <div class="row">
-        {% for n in range(3) %}
+        {% for col in range(3) %}
             
-            {% if n + 3 * i < articlesList|count %}
-                {% set article = articlesList[n + 3 * i] %}
-                <div class="col  l4">
+            {% if col + 3 * row < articlesList|count %}
+                {% set article = articlesList[col + 3 * row] %}
+                <div class="col  s12 l4">
                     <div class="card">
                         <div class="card-image">
                             <a href="{{ article.url }}" target="_blank">

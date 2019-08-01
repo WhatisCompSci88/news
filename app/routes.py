@@ -104,7 +104,7 @@ def news():
     #     article = newsUtils.getTopResponse(siteId)
     #     articlesList.append(article)
     #articlesList = newsUtils.getArticles(3)
-    articlesList = newsUtils.cleanImg(newsUtils.tempNews)
+    articlesList = newsUtils.cleanImg(newsUtils.getArticles(3))
     for index in range(0, len(articlesList)):
         articlesList[index]["index"] = index
     if logged:

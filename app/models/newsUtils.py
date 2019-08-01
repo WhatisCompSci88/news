@@ -106,8 +106,8 @@ def getArticlesByQuery(query):
 def getTopHeadlines():
     data = get_json_response(
         "https://newsapi.org/v2/top-headlines", 
-        #'12126d1b282e4c94a45c9a108b94f246',
-        "be18c103021f45059454abfe91436f61",
+        '12126d1b282e4c94a45c9a108b94f246',
+        #"be18c103021f45059454abfe91436f61",
         {
             "language": "en"
         },
