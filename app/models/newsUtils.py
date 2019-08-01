@@ -10,13 +10,13 @@ politicalIndex = {"New Yorker" : -5.9, "Slate" : -5.9, "Daily Show": -5, "The Gu
 idDict = {
     "New Yorker" : "", "Slate" : "", "Daily Show" : "", "The Guardian": "", "Al Jazeera America": "al-jazeera-english", "NPR" : "", "Colbert Report" : "", "New York Times" : "the-new-york-times", "BuzzFeed" : "buzzfeed", "PBS" : "", "BBC" : "bbc-news", "Huffington Post" : "the-huffington-post" , "Washington Post" : "the-washington-post", "The Economist": "the-economist", "Politico" : "politico", "MSNBC" : "msnbc", "CNN" : "cnn" , "NBC News": "nbc-news", "CBS News": "cbs-news", "Google News" : "google-news", "Bloomberg" : "bloomberg", "ABC News" :  "abc-news", "USA TODAY" : "usa-today", "Yahoo News": "", "Wall Street Journal" : "the-wall-street-journal", "Fox News" : "fox-news", "Drudge Report" : "", "Breitbart" : "breitbart-news", "Ruch Limbaugh Show" : "", "The Blaze" : "", "Sean Hannity Show" : "", "Glenn Beck Program" : ""
 }
-
-tempNews = [{
-    "title": "",
-    "author": "",
-    "url": "",
-    "urlToImage": None,
-} for i in range(0,10)]
+##tempNews for testing news page without connecting to News API
+# tempNews = [{
+#     "title": "",
+#     "author": "",
+#     "url": "",
+#     "urlToImage": None,
+# } for i in range(0,10)]
 
 #Returns single pseudo-random site
 def getRandomSite():

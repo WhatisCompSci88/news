@@ -53,9 +53,7 @@ def editUserData(username, params):
 def getCurrentArticles(username):
     collection = mongo.db.current_articles
     users = list(collection.find({"username": username}))
-    #print(users)
     if len(users) == 0:
-        #print("none")
         return -1
     else:
         print(users[0]["articles"])
@@ -107,6 +105,11 @@ def news():
     articlesList = newsUtils.cleanImg(newsUtils.getArticles(3))
     for index in range(0, len(articlesList)):
         articlesList[index]["index"] = index
+    for article in articlesList:
+            if article["author"] == None or "https:" in article["author"]:
+                article["author"] = article["source"]["name"]
+            elif not(article["source"]["name"] in article["author"]):
+                article["author"] = article["author"] + ", " + article["source"]["name"]
     if logged:
         # session cookie sometimes too
         #session["articles"] = articlesList
@@ -117,6 +120,7 @@ def news():
 @app.route("/finance", methods=["GET","POST"])
 def finance():
     logged = "username" in session
+    print("LOGGED? ", logged)
     articlesList = []
     search = False
     symbol = ""
