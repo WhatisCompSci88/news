@@ -72,7 +72,7 @@ def saveCurrentArticles(username, articles):
             { "$set": {"articles": articles }}
         )
 
-app.secret_key = os.urandom(32)
+app.secret_key = "secret_key"
 # STARTING PAGE
 @app.route("/")
 # NEWS API KEY: 12126d1b282e4c94a45c9a108b94f246
