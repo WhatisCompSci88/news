@@ -79,11 +79,10 @@ app.secret_key = os.urandom(32)
 @app.route("/")
 # NEWS API KEY: 12126d1b282e4c94a45c9a108b94f246
 def start():
-    return redirect(url_for("about"))
-    # if not "username" in session:
-    #     return redirect(url_for("news"))
-    # else:
-    #     return redirect(url_for("home"))
+    if not "username" in session:
+        return redirect(url_for("news"))
+    else:
+        return redirect(url_for("home"))
 
 # NAVBAR OPTIONS
 @app.route("/home", methods=["GET"])
