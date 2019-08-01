@@ -1,8 +1,6 @@
-{% extends "base.html" %}
-{% block title %} Search News {% endblock %} 
-
-{% block header %} <h3>News Search:</h3> {% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %} Search News {% endblock %} {% block header %}
+<h3>News Search:
+    <h3></h3> {% endblock %} {% block content %}
     <div class="container">
         <form method="Post" action="/news/search">
             <input type="text" name="query" placeholder="Enter Keywords Here:">
@@ -12,9 +10,11 @@
         </form>
     </div>
     {% for article in articlesList %}
-    <a href="{{ article.url }}" target="_blank">
-        <h2>{{ article.title }}</h2>
-    </a><br>
-    <h3>by {{ article.author}}</h3>
-    {% endfor %}
-{% endblock %}
+    <div class="tester">
+        <h3>{{article.title}}</h3>
+        <h5>by {{ article.author}}</h5>
+        <a href="{{ article.url }}" target="_blank">
+            {{ article.url }}
+        </a>
+    </div>
+    {% endfor %} {% endblock %}

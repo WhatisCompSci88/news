@@ -1,24 +1,40 @@
-{% extends "base.html" %}
-{% block title %} Home {% endblock %}
-
-{% block content %}
-<div>
+{% extends "base.html" %} {% block title %} Home {% endblock %} {% block content %}
+<div class="row">
+    <div class="col s12">
+        <ul class="tabs">
+            <li class="tab col s6"><a class="active" href="#test1">Saved News</a></li>
+            <li class="tab col s6"><a href="#test2">Saved Stocks</a></li>
+        </ul>
+    </div>
+    
+</div>
+<div id="test1" class="col s12"><h2>Saved News</h2>
+    <div>
+    {% for row in range(((articlesList|count / 3) + 0.99)| int) %}
     <div class="row">
-        {% for article in articlesList %}
-        <div class="col  l4">
-            <div class="card">
-                <div class="card-image">
-                    <a href="{{ article.url }}" target="_blank"><img id="images" class="width-50% height-auto" src="{{ article.urlToImage }}" alt="Image not Found"></a>
+        {% for col in range(3) %}
+            
+            {% if col + 3 * row < articlesList|count %}
+                {% set article = articlesList[col + 3 * row] %}
+                <div class="col  s12 l4">
+                    <div class="card">
+                        <div class="card-image">
+                            <a href="{{ article.url }}" target="_blank">
+                                <img id="images" class="width-50% height-auto" src="{{ article.urlToImage }}" alt="Image not found">
+                            </a>
+                        </div>
+                        <div class="card-content">
+                            <p>{{ article.title }} by {{ article.author}}</p>
+                        </div>
+                        <div class="card-action">
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <p>{{ article.title }} by {{ article.author}}</p>
-                </div>
-                <div class="card-action">
-                    </a>
-                </div>
-            </div>
-        </div>
+            {% endif %}
         {% endfor %}
     </div>
+    {% endfor %}
 </div>
+<div id="test2" class="col s12"><h2>Saved Stocks</h2></div>
 {% endblock %}

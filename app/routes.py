@@ -102,7 +102,7 @@ def news():
     #     article = newsUtils.getTopResponse(siteId)
     #     articlesList.append(article)
     #articlesList = newsUtils.getArticles(3)
-    articlesList = newsUtils.cleanImg(newsUtils.getArticles(3))
+    articlesList = newsUtils.cleanImg(newsUtils.tempNews)
     for index in range(0, len(articlesList)):
         articlesList[index]["index"] = index
     for article in articlesList:
