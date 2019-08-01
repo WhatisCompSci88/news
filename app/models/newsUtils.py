@@ -77,8 +77,8 @@ def getTopResponse(siteId):
     #print("\n SITE ID: " + siteId + " \n")
     data = get_json_response(
         "https://newsapi.org/v2/top-headlines", 
-        '12126d1b282e4c94a45c9a108b94f246',
-        #"be18c103021f45059454abfe91436f61",
+        #'12126d1b282e4c94a45c9a108b94f246',
+        "be18c103021f45059454abfe91436f61",
         {
             "sources" : siteId,
             "language": "en"
@@ -95,8 +95,8 @@ def getTopResponse(siteId):
 def getArticlesByQuery(query):
     data = get_json_response(
         "https://newsapi.org/v2/everything", 
-        '12126d1b282e4c94a45c9a108b94f246',
-        #"be18c103021f45059454abfe91436f61",
+        #'12126d1b282e4c94a45c9a108b94f246',
+        "be18c103021f45059454abfe91436f61",
         {
             "q": query,
             "language": "en"
@@ -107,8 +107,8 @@ def getArticlesByQuery(query):
 def getTopHeadlines():
     data = get_json_response(
         "https://newsapi.org/v2/top-headlines", 
-        '12126d1b282e4c94a45c9a108b94f246',
-        #"be18c103021f45059454abfe91436f61",
+        #'12126d1b282e4c94a45c9a108b94f246',
+        "be18c103021f45059454abfe91436f61",
         {
             "language": "en"
         },
