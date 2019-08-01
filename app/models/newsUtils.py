@@ -16,7 +16,7 @@ tempNews = [{
     "author": "",
     "url": "",
     "urlToImage": None,
-} for i in range(0,9)]
+} for i in range(0,10)]
 
 #Returns single pseudo-random site
 def getRandomSite():

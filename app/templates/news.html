@@ -4,28 +4,34 @@
 {% block header %} News {% endblock %} 
 {% block content %}
 <div>
+    {% for i in range(((articlesList|count / 3) + 0.99)| int) %}
     <div class="row">
-        {% for article in articlesList %}
-        <div class="col  l4">
-            <div class="card">
-                <div class="card-image">
-                    <a href="{{ article.url }}" target="_blank">
-                        <img id="images" class="width-50% height-auto" src="{{ article.urlToImage }}" alt="Image not found">
-                    </a>
+        {% for n in range(3) %}
+            
+            {% if n + 3 * i < articlesList|count %}
+                {% set article = articlesList[n + 3 * i] %}
+                <div class="col  l4">
+                    <div class="card">
+                        <div class="card-image">
+                            <a href="{{ article.url }}" target="_blank">
+                                <img id="images" class="width-50% height-auto" src="{{ article.urlToImage }}" alt="Image not found">
+                            </a>
+                        </div>
+                        <form method="get" action="{{ url_for('saveArticle') }}" class="btn-floating halfway-fab waves-effect waves-light red">
+                            <input type="hidden" name="index" value={{article.index}}>
+                            <input style="color:white;"  type="submit" value="SAVE"></input>
+                        </form>
+                        <div class="card-content">
+                            <p>{{ article.title }} by {{ article.author}}</p>
+                        </div>
+                        <div class="card-action">
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <form method="get" action="{{ url_for('saveArticle') }}" class="btn-floating halfway-fab waves-effect waves-light red">
-                    <input type="hidden" name="index" value={{article.index}}>
-                    <input style="color:white;"  type="submit" value="SAVE"></input>
-                </form>
-                <div class="card-content">
-                    <p>{{ article.title }} by {{ article.author}}</p>
-                </div>
-                <div class="card-action">
-                    </a>
-                </div>
-            </div>
-        </div>
+            {% endif %}
         {% endfor %}
     </div>
+    {% endfor %}
 </div>
 {% endblock %}
