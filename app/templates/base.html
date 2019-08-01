@@ -4,44 +4,50 @@
 <head>
     <title> {% block title %}{% endblock title %} </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300&display=swap" >
+    <link rel="stylesheet" href="/static/all.css">
     {% block customCSS %}{% endblock %}
 </head>
 
-<body class="grey lighten-3">
-    <nav>
-        <div class="red darken-4 nav-wrapper">
-            <div class="container">
-                <ul id="nav-mobile" class="red darken-3 left hide-on-med-and-down">
-                    {% if logged %}
-                    <li><a href="{{url_for('home')}}">Home</a></li>
-                    {% endif %}
-                    <li><a href="{{url_for('news')}}">News</a></li>
-                    <li><a href="{{url_for('finance')}}">Finance</a></li>
-                    <li><a href="{{url_for('about')}}">About</a></li>
-                </ul>
-                <ul id="nav-mobile" class="red darken-3 right hide-on-med-and-down">
-                    <li><a href="{{url_for('searchNews')}}">Search</a></li>
-                    {% if logged %}
-                    <li><a href="{{url_for('logout')}}">Logout</a></li>
-                    {% else %}
-                    <li><a href="{{url_for('login')}}">Login</a></li>
-                    {% endif %}
-                </ul>
+<body class="grey lighten-3 light-font">
+    <header>
+        <nav>
+            <div class="red darken-4 nav-wrapper">
+                <div class="container">
+                    <ul id="nav-mobile" class="red darken-3 left hide-on-med-and-down">
+                        {% if logged %}
+                        <li><a href="{{url_for('home')}}">Home</a></li>
+                        {% endif %}
+                        <li><a href="{{url_for('news')}}">News</a></li>
+                        <li><a href="{{url_for('finance')}}">Finance</a></li>
+                        <li><a href="{{url_for('about')}}">About</a></li>
+                    </ul>
+                    <ul id="nav-mobile" class="red darken-3 right hide-on-med-and-down">
+                        <li><a href="{{url_for('searchNews')}}">Search</a></li>
+                        {% if logged %}
+                        <li><a href="{{url_for('logout')}}">Logout</a></li>
+                        {% else %}
+                        <li><a href="{{url_for('login')}}">Login</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <h1>{% block header %}{% endblock %}</h1>
+            {% block content %}{% endblock %}
         </div>
-    </nav>
-    <div class="container">
-        <h1>{% block header %}{% endblock %}</h1>
-        {% block content %}{% endblock %}
-    </div>
+    </main>
     <footer class="page-footer grey darken-3 grey-text text-lighten-1">
         <div class="grey darken-3 container">
             <div class="row">
                 <!-- These divs will need classes so that they work as described -->
-                <div class="col l2"><a class=" white-text" href="https://github.com/RichardWong8/news">Github Repo</a></div>
-                <div class="col l2"><a class=" white-text" href="https://newsapi.org/pricing">News API</a></div>
-                <div class="col l2"><a class=" white-text" href="https://www.fintechfocus.com/">Fintech</a></div>
+                <div class="col l2"><a class=" white-text" target="_blank" href="https://github.com/RichardWong8/news">Github Repo</a></div>
+                <div class="col l2"><a class=" white-text" target="_blank" href="https://newsapi.org/pricing">News API</a></div>
+                <div class="col l2"><a class=" white-text" target="_blank" href="https://www.fintechfocus.com/">Fintech</a></div>
             </div>
             <div class="row"></div>
         </div>

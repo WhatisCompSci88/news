@@ -8,19 +8,7 @@ app.config['MONGO_DBNAME'] = "final_project_test"
 app.config['MONGO_URI'] = "mongodb+srv://admin:nZ0ELdTyXc6f5utn@cluster0-wb3wx.mongodb.net/final_project_test?retryWrites=true&w=majority"
 mongo = PyMongo(app)
 
-def addUser(username, password):
-    collection = mongo.db.user_database
-    users = list(collection.find({}))
-    userId = len(users) + 1
-    collection.insert({
-        "userId": userId,
-        "username": username,
-        "password": password,
-        "savedArticles": [],
-        "savedStocks": []
-    })
-    return userId
-
+# USERS
 def getUserData(username):
     collection = mongo.db.user_database
     users = list(collection.find({"username":username}))
@@ -44,10 +32,47 @@ def authenticateUser(username, password):
     else:
         return False
         
+def addUser(username, password):
+    collection = mongo.db.user_database
+    users = list(collection.find({}))
+    userId = len(users) + 1
+    collection.insert({
+        "userId": userId,
+        "username": username,
+        "password": password,
+        "savedArticles": [],
+        "savedStocks": []
+    })
+    return userId        
+        
 def editUserData(username, params):
     collection = mongo.db.user_database
     collection.update_one({"username": username}, { "$set": params })
     
+# ARTICLES CURRENTLY VIEWING
+def getCurrentArticles(username):
+    collection = mongo.db.current_articles
+    users = list(collection.find({"username": username}))
+    #print(users)
+    if len(users) == 0:
+        #print("none")
+        return -1
+    else:
+        print(users[0]["articles"])
+        return users[0]["articles"]    
+    
+def saveCurrentArticles(username, articles):
+    collection = mongo.db.current_articles
+    if getCurrentArticles(username) == -1:
+        collection.insert({
+            "username": username,
+            "articles": articles
+        })
+    else:
+        collection.update_one(
+            {"username": username}, 
+            { "$set": {"articles": articles }}
+        )
 
 app.secret_key = os.urandom(32)
 # STARTING PAGE
@@ -79,11 +104,13 @@ def news():
     #     article = newsUtils.getTopResponse(siteId)
     #     articlesList.append(article)
     #articlesList = newsUtils.getArticles(3)
-    articlesList = newsUtils.cleanImg(newsUtils.getArticles(3))
+    articlesList = newsUtils.cleanImg(newsUtils.tempNews)
     for index in range(0, len(articlesList)):
         articlesList[index]["index"] = index
     if logged:
-        session["articles"] = articlesList
+        # session cookie sometimes too
+        #session["articles"] = articlesList
+        saveCurrentArticles(session["username"], articlesList)
     return render_template("news.html", articlesList=articlesList, logged=logged)
 
 
@@ -103,7 +130,8 @@ def finance():
             articlesList[index]["index"] = index
             print(articlesList[index]["index"])
         if logged:
-            session["articles"] = articlesList
+            #session["articles"] = articlesList
+            saveCurrentArticles(session["username"], articlesList)
     return render_template("searchFinance.html", logged=logged, articlesList=articlesList, search=search, symbol=symbol)
 
 @app.route("/about", methods=["GET"])
@@ -127,7 +155,8 @@ def searchNews():
             elif not(article["source"]["name"] in article["author"]):
                 article["author"] = article["author"] + ", " + article["source"]["name"]
         if logged:
-            session["articles"] = articlesList
+            #session["articles"] = articlesList
+            saveCurrentArticles(session["username"], articlesList)
     return render_template("searchNews.html", articlesList=articlesList, logged=logged)
     
 # @app.route("/finance/search", methods=["GET"])
@@ -195,11 +224,14 @@ def logout():
 # news/save/article
 @app.route("/save/article", methods=["GET", "POST"])
 def saveArticle():
-    if "username" in session and "articles" in session:
+    if "username" in session:
+    #and "articles" in session:
         username = session["username"]
         index = int(request.args["index"])
         
-        articleToSave = session["articles"][index]
+        articleToSave = getCurrentArticles(username)[index]
+        print("ARTICLE TO SAVE", articleToSave)
+        #articleToSave = session["articles"][index]
         userData = getUserData(username)
         savedArticles = userData["savedArticles"]
         savedArticles.append(articleToSave)

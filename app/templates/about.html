@@ -1,13 +1,12 @@
 {% extends "base.html" %} 
+{% block title %} About Page {% endblock %}
 
-{% block header %}
-<center>
-  {% with messages = get_flashed_messages() %} {% for msg in messages %} <h1>{{ msg }}</h1> <br> {% endfor %} {% endwith %}
-  <h1>About Page</h1>
-</center>
-{% endblock %} 
+{% block header %}<center>About Page</center>{% endblock %} 
 
 {% block content %}
+<center>
+  {% with messages = get_flashed_messages() %} {% for msg in messages %} {{ msg }} {% endfor %} {% endwith %}
+</center>
 <div class="col s12 m7">
   <h2 class="header">Our Goal</h2>
   <div class="card horizontal">
@@ -67,13 +66,13 @@
 <div class="container">
   <form method="post" action="/contact">
     <label for="name">Name</label>
-    <input type="text" id="name" name="name" placeholder="Your name..">
+    <input type="text" id="name" name="name" placeholder="Your name.." minlength=2>
 
     <label for="email">Email</label>
-    <input type="text" id="email" name="email" placeholder="Your email..">
+    <input type="email" id="email" name="email" placeholder="Your email..">
 
     <label for="feedback">Feedback</label>
-    <textarea id="subject" name="feedback" placeholder="Give us feedback.."></textarea><br><br>
+    <textarea id="subject" name="feedback" placeholder="Give us feedback.." minlength=1></textarea><br><br>
 
     <input class="waves-effect waves-light btn" type="submit" value="Submit">
     <br><br>

@@ -83,9 +83,10 @@ def getTopResponse(siteId):
             "language": "en"
         },
     )
-    print(data)
+    #print(data)
     if data["totalResults"] > 0:
         randNum = rand(0,len(data["articles"]) - 1)
+        data["articles"][randNum]["content"] = None
         return data["articles"][randNum]
     else:
         return False

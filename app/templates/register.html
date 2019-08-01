@@ -1,11 +1,7 @@
 {% extends "base.html" %}
 {% block title %} Register {% endblock %}
-{% block customCSS %}
-    <link rel="stylesheet" href="/static/footer.css">
-{% endblock %}
 
-{% block header %} <div class="center">REGISTER</div> {% endblock %}
-
+{% block header %} <div class="center">Register</div> {% endblock %}
 {% block content %}
   <div class="container center">
     {% with messages = get_flashed_messages() %}
@@ -14,9 +10,9 @@
     {% endfor %}
     {% endwith %}
     <form method="post" action="/register/auth">
-      <input type="text" name="username" placeholder="username"><br>
-      <input type="password" name="password" placeholder="password"><br>
-      <input type="password" name="confirm" placeholder="confirm password"><br>
+      <input type="text" name="username" placeholder="username" minlength=3><br>
+      <input type="password" name="password" placeholder="password" minlength=3><br>
+      <input type="password" name="confirm" placeholder="confirm password" minlength=3><br>
       <button class="waves-effect waves-light btn" type="submit" name="register">REGISTER</button>
     </form>
   </div>

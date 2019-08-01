@@ -1,4 +1,8 @@
-{% extends "base.html" %} {% block title %} Finance {% endblock %} {% block header %} Finance {% if search %} SEARCH - {{symbol.upper()}} {% endif %}{% endblock %} {% block content %}
+{% extends "base.html" %} 
+{% block title %} Finance {% endblock %} 
+
+{% block header %} Finance {% if search %} SEARCH - {{symbol.upper()}} {% endif %}{% endblock %} 
+{% block content %}
 <h3>Symbol Search: </h3>
 <div class="container">
     <form method="post" action="/finance">
