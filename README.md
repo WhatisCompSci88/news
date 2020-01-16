@@ -6,6 +6,14 @@ The user can login or register and user data will be saved on the home page incl
 
 More information can be found on the about page as well as a contact form.
 
+#Pictures
+
+![News Page](images/news.png)
+
+![Login Page](images/login.png)
+
+![About Page](images/about.png)
+
 # To run locally:
 
 See the requirements.txt for dependencies
@@ -14,3 +22,5 @@ Enter "flask run"
 
 # Developed by Jose Jimenez, Tejpal Ramdas, and Richard Wong
 # FinTech Focus at Wells Fargo 2019
+
+
