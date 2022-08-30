@@ -4,9 +4,9 @@ This full stack web application is designed to diplay news from various politica
 
 The user can login or register and user data will be saved on the home page including saved articles and saved stocks.  
 
-Made with Python, Flask, MongoDB, and Materialize.
-
 More information can be found on the about page as well as a contact form.
+
+Made with Python, Flask, MongoDB, and Materialize.
 
 # Pictures
 
